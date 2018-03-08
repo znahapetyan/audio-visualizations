@@ -1,15 +1,7 @@
 import { getRandomColor } from '../helpers';
+import { Drawer } from '../drawer';
 
-export class SinusoidalCircle {
-    constructor(analyser, canvas) {
-        this.analyser = analyser;
-        this.canvas = canvas;
-        this.canvasCtx = canvas.getContext('2d');
-
-        this.bufferLength = analyser.frequencyBinCount;
-        this.dataArray = new Uint8Array(this.bufferLength);
-    }
-
+export class SinusoidalCircle extends Drawer {
     draw = () => {
         this.analyser.getByteTimeDomainData(this.dataArray);
 
