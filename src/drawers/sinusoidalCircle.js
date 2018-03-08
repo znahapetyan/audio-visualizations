@@ -16,8 +16,8 @@ export class SinusoidalCircle {
         const canvasWidth = this.canvas.width;
         const canvasHeight = this.canvas.height;
 
-        // this.canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-        // this.canvasCtx.fillRect(0, 0, canvasWidth, canvasHeight);
+        this.canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+        this.canvasCtx.fillRect(0, 0, canvasWidth, canvasHeight);
         this.canvasCtx.lineWidth = 2;
         this.canvasCtx.strokeStyle = getRandomColor();
         this.canvasCtx.beginPath();

@@ -1,5 +1,6 @@
 import { AudioProvider } from './audioProvider';
 import { SinusoidalCircle } from './drawers/sinusoidalCircle';
+import { NestedFrequencyCircles } from './drawers/nestedFrequencyCircles';
 import { subscribeToFileLoad } from './helpers';
 
 function start(file) {
@@ -14,7 +15,7 @@ function start(file) {
     const audio = new AudioProvider();
     audio.stop();
 
-    audio.initialize(file, canvas, SinusoidalCircle).then(() => {
+    audio.initialize(file, canvas, NestedFrequencyCircles).then(() => {
         audio.play();
     });
 }

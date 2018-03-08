@@ -21,7 +21,7 @@ export class AudioProvider {
 
         this.analyser.connect(this.context.destination);
 
-        this.drawer = new Drawer(this.analyser, this.canvas);
+        this.setDrawer(Drawer);
 
         return new Promise((resolve, reject) => {
             this.context.decodeAudioData(file, buffer => {
@@ -52,6 +52,10 @@ export class AudioProvider {
 
         this.isPlaying = false;
         this.source.stop();
+    }
+
+    setDrawer = (Drawer) => {
+        this.drawer = new Drawer(this.analyser, this.canvas);
     }
 
     draw = () => {
