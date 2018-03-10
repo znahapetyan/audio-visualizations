@@ -2,42 +2,42 @@ import { getRandomColor } from '../helpers';
 import { Drawer } from '../drawer';
 
 export class SinusoidalCircle extends Drawer {
+    constructor(analyser, view) {
+        super(analyser, view);
+
+        this.layer = new PIXI.Container();
+        this.view.addChild(this.layer);
+
+        this.sliceCount = 6;
+        this.sliceDeg = 2 * Math.PI / this.sliceCount;
+    }
+
     draw = () => {
         this.analyser.getByteTimeDomainData(this.dataArray);
 
-        const canvasWidth = this.canvas.width;
-        const canvasHeight = this.canvas.height;
+        this.layer.removeChildren();
 
-        this.canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-        this.canvasCtx.fillRect(0, 0, canvasWidth, canvasHeight);
-        this.canvasCtx.lineWidth = 2;
-        this.canvasCtx.strokeStyle = getRandomColor();
-        this.canvasCtx.beginPath();
+        let line = new PIXI.Graphics();
+        line.lineStyle(2, getRandomColor());
 
-        const offestX = canvasWidth / 2;
-        const offestY = canvasHeight / 2;
-
-        const sliceCount = 6;
-        const sliceDeg = 2 * Math.PI / sliceCount;
-
-        for (let i = 0; i < sliceCount; i++) {
+        for (let i = 0; i < this.sliceCount; i++) {
             let startDeg, endDeg;
 
             if (i % 2 == 0) {
-                startDeg = i * sliceDeg;
-                endDeg = (i + 1) * sliceDeg;
+                startDeg = i * this.sliceDeg;
+                endDeg = (i + 1) * this.sliceDeg;
             } else {
-                startDeg = (i + 1) * sliceDeg;
-                endDeg = i * sliceDeg;
+                startDeg = (i + 1) * this.sliceDeg;
+                endDeg = i * this.sliceDeg;
             }
 
-            this.drawCyclic(this.canvasCtx, this.dataArray, offestX, offestY, startDeg, endDeg);
+            this.drawCyclic(line, this.dataArray, startDeg, endDeg);
         }
 
-        this.canvasCtx.stroke();
+        this.layer.addChild(line);
     }
 
-    drawCyclic(canvasCtx, data, offestX, offestY, startDeg, endDeg) {
+    drawCyclic(line, data, startDeg, endDeg) {
         const dataLength = data.length;
         const dDeg = (startDeg - endDeg) / dataLength;
 
@@ -45,13 +45,13 @@ export class SinusoidalCircle extends Drawer {
 
         for (let i = 0; i < dataLength; i++) {
             const r = 100 + data[i] * .3;
-            const x = offestX + r * Math.cos(deg);
-            const y = offestY + r * Math.sin(deg);
+            const x = r * Math.cos(deg);
+            const y = r * Math.sin(deg);
 
             if (i === 0) {
-                canvasCtx.moveTo(x, y);
+                line.moveTo(x, y);
             } else {
-                canvasCtx.lineTo(x, y);
+                line.lineTo(x, y);
             }
 
             deg += dDeg;

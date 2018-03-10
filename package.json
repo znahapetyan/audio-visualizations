@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "pixi": "^0.3.1",
+    "pixi.js": "^4.7.0",
     "webpack-cli": "^2.0.9"
   },
   "devDependencies": {

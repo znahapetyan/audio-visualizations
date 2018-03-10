@@ -1,3 +1,4 @@
+import * as PIXI from 'pixi.js';
 import { AudioProvider } from './audioProvider';
 import { SinusoidalCircle } from './drawers/sinusoidalCircle';
 import { NestedFrequencyCircles } from './drawers/nestedFrequencyCircles';
@@ -8,16 +9,23 @@ function start(file) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const canvasCtx = canvas.getContext('2d');
-    canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-    canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+    const view = new PIXI.Application({
+        view: canvas,
+        width: canvas.width,
+        height: canvas.height,
+        antialias: true,
+    });
 
     const audio = new AudioProvider();
     audio.stop();
 
-    audio.initialize(file, canvas, NestedFrequencyCircles).then(() => {
+    audio.initialize(file, view, SinusoidalCircle).then(() => {
         audio.play();
     });
 }
 
-subscribeToFileLoad(document.getElementById('audio'), start);
+function setup() {
+    subscribeToFileLoad(document.getElementById('audio'), start);
+}
+
+setup();

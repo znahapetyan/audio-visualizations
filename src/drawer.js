@@ -1,8 +1,7 @@
 export class Drawer {
-    constructor(analyser, canvas) {
+    constructor(analyser, view) {
         this.analyser = analyser;
-        this.canvas = canvas;
-        this.canvasCtx = canvas.getContext('2d');
+        this.view = view;
 
         this.bufferLength = analyser.frequencyBinCount;
         this.dataArray = new Uint8Array(this.bufferLength);

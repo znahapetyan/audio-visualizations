@@ -1,6 +1,6 @@
 export const getRandomColor = function () {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
+    const letters = '0123456789abcdef';
+    let color = '0x';
 
     for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];

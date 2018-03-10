@@ -1,3 +1,5 @@
+import * as PIXI from 'pixi.js';
+
 export class AudioProvider {
     static instance;
 
@@ -9,10 +11,10 @@ export class AudioProvider {
         AudioProvider.instance = this;
     }
 
-    initialize = (file, canvas, Drawer) => {
+    initialize = (file, view, Drawer) => {
         this.isPlaying = false;
 
-        this.canvas = canvas;
+        this.view = view;
         this.context = new AudioContext();
         this.source = this.context.createBufferSource();
 
@@ -55,7 +57,12 @@ export class AudioProvider {
     }
 
     setDrawer = (Drawer) => {
-        this.drawer = new Drawer(this.analyser, this.canvas);
+        const layer = new PIXI.Container()
+        layer.x = this.view.view.width / 2;
+        layer.y = this.view.view.height / 2;
+        this.view.stage.addChild(layer);
+
+        this.drawer = new Drawer(this.analyser, layer);
     }
 
     draw = () => {
